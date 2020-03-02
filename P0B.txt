@@ -108,7 +108,7 @@ public class P0B
         return intArray;
     }
     
-	public static Boolean bracketsAreBalanced(String s)
+    public static Boolean bracketsAreBalanced(String s)
     {
         /* Remove Spaces from String */
         s = s.deleteWhitespace();
@@ -116,8 +116,91 @@ public class P0B
         /* Check If String Is An Even Number */
         if (Math.mod(s.length(), 2) != 0)
         {
-            System.debug(s);
-            System.debug('String is an uneven number.');
+            //System.debug(s);
+            //System.debug('String has an uneven number of characters.');
+            
+            return false;	//return false if the string length isn't an even number
+        }
+        else
+        {
+            List<String> stack = new List<String>();
+            
+            /* Move Through String */
+            for (Integer i = 0; i < s.length(); i++)
+            {
+                String currentChar = s.substring(i, i + 1);
+                
+                /* Find Opening Brackets */
+                if (currentChar == '(' || currentChar == '{' || currentChar == '[')
+                {
+                    stack.add(currentChar);
+                }
+                /* Find Closing Brackets */
+                else if (currentChar == ')' || currentChar == '}' || currentChar == ']')
+                {
+                    /* Check if Closing Bracket Has a Matching Opening Bracket */
+                    switch on currentChar
+                    {
+                        when ')'
+                        {
+                            if (stack.get(stack.size() - 1) != '(')
+                            {
+                                //System.debug(s);
+            					//System.debug(stack.get(stack.size() - 1) + ' doesn\'t mirror ' + currentChar);
+                                
+                                return false;	//return false if the first closing bracket doesn't match the last opening bracket
+                            }
+                            else
+                            {
+                                stack.remove(stack.size() - 1);	//remove the matching opening bracket
+                            }
+                        }
+                        when '}'
+                        {
+                            if (stack.get(stack.size() - 1) != '{')
+                            {
+                                //System.debug(s);
+            					//System.debug(stack.get(stack.size() - 1) + ' doesn\'t mirror ' + currentChar);
+                                
+                                return false;	//return false if the first closing bracket doesn't match the last opening bracket
+                            }
+                            else
+                            {
+                                stack.remove(stack.size() - 1);	//remove the matching opening bracket
+                            }
+                        }
+                        when ']'
+                        {
+                            if (stack.get(stack.size() - 1) != '[')
+                            {
+                                //System.debug(s);
+            					//System.debug(stack.get(stack.size() - 1) + ' doesn\'t mirror ' + currentChar);
+                                
+                                return false;	//return false if the first closing bracket doesn't match the last opening bracket
+                            }
+                            else
+                            {
+                                stack.remove(stack.size() - 1);	//remove the matching opening bracket
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return true;
+        }
+    }
+    
+    private Boolean OldBracket(String s)	//previous method using reversed string
+    {
+        /* Remove Spaces from String */
+        s = s.deleteWhitespace();
+        
+        /* Check If String Is An Even Number */
+        if (Math.mod(s.length(), 2) != 0)
+        {
+            //System.debug(s);
+            //System.debug('String hass an uneven number of characters.');
             
             return false;	//return false if the string length isn't an even number
         }
@@ -134,7 +217,8 @@ public class P0B
                 /* Check If Bracket Matches Reversed Bracket */
             	if (char1 == '(' && char2 != ')' || char1 == '{' && char2 != '}' || char1 == '[' && char2 != ']')
             	{
-                    System.debug(char1 + ' doesn\'t mirror ' + char2);
+                    //System.debug(s);
+                    //System.debug(char1 + ' doesn\'t mirror ' + char2);
                     
                 	return false;	//return false if the first bracket doesn't mirror the last bracket
             	}
