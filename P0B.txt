@@ -1,3 +1,13 @@
+/////////////////////////////////////////////////////
+//
+// Name: Project 0 Bravo
+// Author: Caleb Flick (calebflick@gmail.com)
+// Date: 3/2/2020
+// Description: Series of apex methods to demonstrate
+// 		basic understanding of coding concepts.
+// 
+/////////////////////////////////////////////////////
+
 public class P0B
 {
     public static Integer nFibonacci(Integer n)
