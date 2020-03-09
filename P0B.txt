@@ -227,4 +227,75 @@ public class P0B
             return true;
         }
     }
+
+    public static void updateAccountSize()
+    {
+        /* Retrieve All Accounts */
+        List<Account> accountsList = [SELECT NumberOfEmployees, Size__c FROM Account ORDER BY NumberOfEmployees DESC];
+        
+        
+        /* Update Account Size */
+        for (Account acc : accountsList)
+        {
+            if (acc.NumberOfEmployees <= 1000)
+            {
+                acc.Size__c = 'Small';
+                update acc;
+            }
+            else if (acc.NumberOfEmployees <= 10000)
+            {
+                acc.Size__c = 'Medium';
+                update acc;
+            }
+            else
+            {
+                acc.Size__c = 'Large';
+                update acc;
+            }
+        }
+    }
+    
+    public static void updateCALeads()
+    {
+        /* Retrieve All CA Leads */
+        List<List<sObject>> leadsList = [FIND 'ca' RETURNING Lead(Address, Status, Description)];
+        
+        /* Loop Through Object Lists */
+        for (List<sObject> caList : leadsList)
+        {
+            /* Loop Through Objects */
+            for (sObject caObj : caList)
+            {
+                /* Cast sObject to Lead */
+                Lead caLead = (Lead)caObj;
+            	
+                /* Close CA Leads */
+            	if (caLead.Address.getStateCode() == 'CA')
+            	{
+                	caLead.Status = 'Closed - Not Converted';
+                    caLead.Description = 'We are no longer doing business in California.';
+                    update caLead;
+            	}
+            }
+        }
+    }
+    
+    public static void closePastDueOpportunities()
+    {
+        /* Retrieve All Opportunities */
+        List<Opportunity> opportunitiesList = [SELECT CloseDate, StageName FROM Opportunity];
+        
+        /* Change Past Due Opportunities to Closed Lost */
+        for (Opportunity opp : opportunitiesList)
+        {
+            if (opp.CloseDate < System.today())
+            {
+                if (opp.StageName != 'Closed Won')
+                {
+                    opp.StageName = 'Closed Lost';
+                    update opp;
+                }
+            }
+        }
+    }
 }
