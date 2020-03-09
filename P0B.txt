@@ -190,43 +190,6 @@ public class P0B
             return true;
         }
     }
-    
-    private Boolean OldBracket(String s)	//previous method using reversed string
-    {
-        /* Remove Spaces from String */
-        s = s.deleteWhitespace();
-        
-        /* Check If String Is An Even Number */
-        if (Math.mod(s.length(), 2) != 0)
-        {
-            //System.debug(s);
-            //System.debug('String hass an uneven number of characters.');
-            
-            return false;	//return false if the string length isn't an even number
-        }
-        else
-        {
-            String reversedString = s.reverse();
-        	
-            /* Move Through String */
-        	for (Integer i = 0; i < s.length(); i++)
-        	{
-            	String char1 = s.substring(i, i + 1);
-            	String char2 = reversedString.substring(i, i + 1);
-            	
-                /* Check If Bracket Matches Reversed Bracket */
-            	if (char1 == '(' && char2 != ')' || char1 == '{' && char2 != '}' || char1 == '[' && char2 != ']')
-            	{
-                    //System.debug(s);
-                    //System.debug(char1 + ' doesn\'t mirror ' + char2);
-                    
-                	return false;	//return false if the first bracket doesn't mirror the last bracket
-            	}
-        	}
-            
-            return true;
-        }
-    }
 
     public static void updateAccountSize()
     {
